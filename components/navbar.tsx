@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Home, BookOpen, BarChart2, User, LogOut } from "lucide-react"
@@ -19,13 +19,11 @@ const navItems = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
   const { data: session, status } = useSession()
   
   const isLoading = status === "loading"
   const isAuthenticated = status === "authenticated"
-
-  // Don't show navbar on landing page
-  if (pathname === "/") return null
 
   const handleLogout = async () => {
     try {
@@ -33,6 +31,8 @@ export default function Navbar() {
       toast.success("Ai fost deconectat cu succes!")
       // Close mobile menu if open
       if (isOpen) setIsOpen(false)
+      // Redirect to root path
+      router.push("/")
     } catch (error) {
       console.error("Logout error:", error)
       toast.error("A apărut o eroare la deconectare")

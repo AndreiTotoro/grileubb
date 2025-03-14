@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -27,59 +28,63 @@ import {
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { data: session, status } = useSession()
+  const isAuthenticated = status === "authenticated"
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center">
-            <Link href="/" className="font-bold text-2xl tracking-tight">
-              <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-                grile
-              </span>
-              <span className="bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent">ubb</span>
-              <span className="text-gray-800">.com</span>
-            </Link>
+      {/* Header - Only show if not authenticated */}
+      {!isAuthenticated && (
+        <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div className="flex items-center">
+              <Link href="/" className="font-bold text-2xl tracking-tight">
+                <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+                  grile
+                </span>
+                <span className="bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent">ubb</span>
+                <span className="text-gray-800">.com</span>
+              </Link>
+            </div>
+
+            <nav className="hidden md:flex items-center space-x-8">
+              <Link href="#features" className="text-gray-700 hover:text-indigo-600 font-medium transition">
+                Features
+              </Link>
+              <Link href="#how-it-works" className="text-gray-700 hover:text-indigo-600 font-medium transition">
+                How It Works
+              </Link>
+              <Link href="#pricing" className="text-gray-700 hover:text-indigo-600 font-medium transition">
+                Pricing
+              </Link>
+            </nav>
+
+            <div className="hidden md:flex items-center space-x-4">
+              <Link href="/login">
+                <Button variant="ghost" className="text-gray-700 hover:text-indigo-600 hover:bg-indigo-50">
+                  Login
+                </Button>
+              </Link>
+              <Link href="/register">
+                <Button className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-medium">
+                  Sign Up Free
+                </Button>
+              </Link>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100"
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <Menu className="h-6 w-6" />
+            </button>
           </div>
+        </header>
+      )}
 
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link href="#features" className="text-gray-700 hover:text-indigo-600 font-medium transition">
-              Features
-            </Link>
-            <Link href="#how-it-works" className="text-gray-700 hover:text-indigo-600 font-medium transition">
-              How It Works
-            </Link>
-            <Link href="#pricing" className="text-gray-700 hover:text-indigo-600 font-medium transition">
-              Pricing
-            </Link>
-          </nav>
-
-          <div className="hidden md:flex items-center space-x-4">
-            <Link href="/login">
-              <Button variant="ghost" className="text-gray-700 hover:text-indigo-600 hover:bg-indigo-50">
-                Login
-              </Button>
-            </Link>
-            <Link href="/register">
-              <Button className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-medium">
-                Sign Up Free
-              </Button>
-            </Link>
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <Menu className="h-6 w-6" />
-          </button>
-        </div>
-      </header>
-
-      {/* Mobile menu */}
-      {mobileMenuOpen && (
+      {/* Mobile menu - Only show if not authenticated */}
+      {!isAuthenticated && mobileMenuOpen && (
         <div className="fixed inset-0 z-50 bg-white md:hidden">
           <div className="flex justify-between items-center p-4 border-b">
             <Link href="/" className="font-bold text-2xl tracking-tight">
@@ -131,8 +136,8 @@ export default function LandingPage() {
         </div>
       )}
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
+      {/* Hero Section - Adjust padding based on authentication status */}
+      <section className={`${isAuthenticated ? 'pt-20' : 'pt-32'} pb-20 md:${isAuthenticated ? 'pt-24' : 'pt-40'} md:pb-32 overflow-hidden`}>
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <Badge className="mb-6 bg-indigo-100 text-indigo-800 hover:bg-indigo-200 py-1.5 px-4 text-sm font-medium rounded-full">
