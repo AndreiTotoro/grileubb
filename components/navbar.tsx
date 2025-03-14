@@ -3,9 +3,11 @@
 import Link from "next/link"
 import { useState } from "react"
 import { usePathname } from "next/navigation"
+import { useSession, signOut } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Home, BookOpen, BarChart2, User, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { toast } from "sonner"
 
 const navItems = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
@@ -17,11 +19,25 @@ const navItems = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const { data: session, status } = useSession()
+  
+  const isLoading = status === "loading"
+  const isAuthenticated = status === "authenticated"
 
   // Don't show navbar on landing page
   if (pathname === "/") return null
 
-  const isLoggedIn = pathname !== "/login" && pathname !== "/register"
+  const handleLogout = async () => {
+    try {
+      await signOut({ redirect: false })
+      toast.success("Ai fost deconectat cu succes!")
+      // Close mobile menu if open
+      if (isOpen) setIsOpen(false)
+    } catch (error) {
+      console.error("Logout error:", error)
+      toast.error("A apărut o eroare la deconectare")
+    }
+  }
 
   return (
     <>
@@ -29,7 +45,7 @@ export default function Navbar() {
       <nav className="fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-50 px-4">
         <div className="h-full flex items-center justify-between">
           <div className="flex items-center">
-            <Link href={isLoggedIn ? "/dashboard" : "/"} className="font-bold text-2xl tracking-tight mr-8">
+            <Link href={isAuthenticated ? "/dashboard" : "/"} className="font-bold text-2xl tracking-tight mr-8">
               <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
                 grile
               </span>
@@ -37,7 +53,7 @@ export default function Navbar() {
               <span className="text-gray-800">.com</span>
             </Link>
 
-            {isLoggedIn && (
+            {isAuthenticated && (
               <div className="hidden md:flex items-center space-x-1">
                 {navItems.map((item) => {
                   const isActive = pathname === item.href
@@ -63,9 +79,9 @@ export default function Navbar() {
             )}
           </div>
 
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <div className="hidden md:flex items-center">
-              <Button variant="ghost" size="sm" className="text-gray-700">
+              <Button variant="ghost" size="sm" className="text-gray-700" onClick={handleLogout}>
                 <LogOut className="h-4 w-4 mr-2" />
                 Logout
               </Button>
@@ -99,7 +115,7 @@ export default function Navbar() {
       {isOpen && (
         <div className="fixed inset-0 z-50 bg-white md:hidden">
           <div className="flex justify-between items-center p-4 border-b">
-            <Link href={isLoggedIn ? "/dashboard" : "/"} className="font-bold text-2xl tracking-tight">
+            <Link href={isAuthenticated ? "/dashboard" : "/"} className="font-bold text-2xl tracking-tight">
               <span className="text-pink-500">grile</span>
               <span className="text-blue-500">ubb</span>
               <span className="text-black">.com</span>
@@ -109,7 +125,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <div className="p-4">
               <div className="space-y-1">
                 {navItems.map((item) => {
@@ -137,7 +153,7 @@ export default function Navbar() {
                 <Button
                   variant="ghost"
                   className="w-full justify-start px-3 py-3 mt-4 text-base font-medium text-gray-700"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleLogout}
                 >
                   <LogOut className="h-5 w-5 mr-3" />
                   Logout

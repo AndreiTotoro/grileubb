@@ -5,6 +5,7 @@ import type React from "react"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,24 +16,51 @@ export default function Login() {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsLoading(true)
+    setError("")
 
     // Simple validation
     if (!email || !password) {
       toast.error("Te rugăm să completezi toate câmpurile")
+      setError("Te rugăm să completezi toate câmpurile")
+      setIsLoading(false)
       return
     }
 
-    // Simulate login (in a real app, this would call an API)
-    toast.success("Autentificare reușită! Bine ai revenit!")
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      })
 
-    // Redirect to dashboard
-    router.push("/dashboard")
+      if (result?.error) {
+        console.error("Login error:", result.error)
+        toast.error(result.error || "A apărut o eroare la autentificare")
+        setError(result.error || "A apărut o eroare la autentificare")
+        setIsLoading(false)
+        return
+      }
+
+      // Success
+      toast.success("Autentificare reușită! Bine ai revenit!")
+      router.push("/dashboard")
+      router.refresh()
+    } catch (error) {
+      console.error("Login error:", error)
+      toast.error("A apărut o eroare la autentificare. Încearcă din nou.")
+      setError("A apărut o eroare la autentificare. Încearcă din nou.")
+      setIsLoading(false)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  // Rest of the component remains the same
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <div className="w-full max-w-md p-4">
@@ -57,6 +85,11 @@ export default function Login() {
           </CardHeader>
           <form onSubmit={handleLogin}>
             <CardContent className="space-y-4">
+              {error && (
+                <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm">
+                  {error}
+                </div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -65,6 +98,7 @@ export default function Login() {
                   placeholder="nume@exemplu.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  disabled={isLoading}
                 />
               </div>
               <div className="space-y-2">
@@ -74,15 +108,22 @@ export default function Login() {
                     Ai uitat parola?
                   </Link>
                 </div>
-                <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <Input 
+                  id="password" 
+                  type="password" 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                  disabled={isLoading}
+                />
               </div>
             </CardContent>
             <CardFooter className="flex flex-col">
               <Button
                 type="submit"
                 className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-medium"
+                disabled={isLoading}
               >
-                Autentificare
+                {isLoading ? "Se procesează..." : "Autentificare"}
               </Button>
               <p className="text-center mt-4 text-sm text-gray-600">
                 Nu ai cont?{" "}

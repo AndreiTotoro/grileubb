@@ -5,6 +5,7 @@ import type React from "react"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,26 +21,76 @@ export default function Register() {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [subject, setSubject] = useState<Subject>("math")
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsLoading(true)
+    setError("")
 
     // Simple validation
     if (!name || !email || !password || !confirmPassword) {
       toast.error("Te rugăm să completezi toate câmpurile")
+      setError("Te rugăm să completezi toate câmpurile")
+      setIsLoading(false)
       return
     }
 
     if (password !== confirmPassword) {
       toast.error("Parolele nu coincid")
+      setError("Parolele nu coincid")
+      setIsLoading(false)
       return
     }
 
-    // Simulate registration (in a real app, this would call an API)
-    toast.success("Înregistrare reușită! Contul tău a fost creat cu succes!")
+    try {
+      // Register the user
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          subject,
+        }),
+      });
 
-    // Redirect to dashboard
-    router.push("/dashboard")
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'A apărut o eroare la înregistrare');
+      }
+
+      // Auto-login after successful registration
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (result?.error) {
+        console.error("Login after registration error:", result.error);
+        toast.error(result.error || "Înregistrare reușită, dar a apărut o eroare la autentificare automată. Te rugăm să te autentifici manual.");
+        setError(result.error || "Înregistrare reușită, dar a apărut o eroare la autentificare automată. Te rugăm să te autentifici manual.");
+        router.push("/login");
+        return;
+      }
+
+      // Success
+      toast.success("Înregistrare reușită! Contul tău a fost creat cu succes!")
+      router.push("/dashboard")
+      router.refresh()
+    } catch (error: any) {
+      console.error("Registration error:", error)
+      const errorMessage = error.message || "A apărut o eroare la înregistrare. Încearcă din nou."
+      toast.error(errorMessage)
+      setError(errorMessage)
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -66,9 +117,20 @@ export default function Register() {
           </CardHeader>
           <form onSubmit={handleRegister}>
             <CardContent className="space-y-4">
+              {error && (
+                <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm">
+                  {error}
+                </div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="name">Nume complet</Label>
-                <Input id="name" placeholder="Nume Prenume" value={name} onChange={(e) => setName(e.target.value)} />
+                <Input 
+                  id="name" 
+                  placeholder="Nume Prenume" 
+                  value={name} 
+                  onChange={(e) => setName(e.target.value)} 
+                  disabled={isLoading}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
@@ -78,11 +140,18 @@ export default function Register() {
                   placeholder="nume@exemplu.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  disabled={isLoading}
                 />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Parolă</Label>
-                <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <Input 
+                  id="password" 
+                  type="password" 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                  disabled={isLoading}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword">Confirmă parola</Label>
@@ -91,6 +160,7 @@ export default function Register() {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  disabled={isLoading}
                 />
               </div>
               <div className="space-y-2">
@@ -100,6 +170,7 @@ export default function Register() {
                   value={subject}
                   onValueChange={(value) => setSubject(value as Subject)}
                   className="flex space-x-4"
+                  disabled={isLoading}
                 >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="math" id="math" />
@@ -116,8 +187,9 @@ export default function Register() {
               <Button
                 type="submit"
                 className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-medium"
+                disabled={isLoading}
               >
-                Creează cont
+                {isLoading ? "Se procesează..." : "Creează cont"}
               </Button>
               <p className="text-center mt-4 text-sm text-gray-600">
                 Ai deja cont?{" "}

@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/navbar"
 import { SonnerProvider } from "@/components/sonner-provider"
+import AuthProvider from "@/components/providers/auth-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,11 +23,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <Navbar />
-          <main className="min-h-screen pt-16">{children}</main>
-          <SonnerProvider />
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider attribute="class" defaultTheme="light">
+            <Navbar />
+            <main className="min-h-screen pt-16">{children}</main>
+            <SonnerProvider />
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   )
