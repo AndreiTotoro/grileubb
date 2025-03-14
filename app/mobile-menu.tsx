@@ -48,13 +48,6 @@ export default function MobileMenu() {
             >
               Pricing
             </Link>
-            <Link
-              href="#community"
-              className="text-gray-700 hover:text-pink-500 font-medium py-2"
-              onClick={() => setIsOpen(false)}
-            >
-              Community
-            </Link>
             <Button
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold mt-4"
               onClick={() => setIsOpen(false)}

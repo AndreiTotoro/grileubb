@@ -222,17 +222,6 @@ export default function FeaturesPage() {
             </div>
 
             <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-violet-100 rounded-lg flex items-center justify-center mb-6">
-                <Users className="h-6 w-6 text-violet-600" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Forum comunitate</h3>
-              <p className="text-gray-600">
-                Conectează-te cu alți studenți, discută probleme dificile și împărtășește strategii de învățare
-                eficiente.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-fuchsia-100 rounded-lg flex items-center justify-center mb-6">
                 <Award className="h-6 w-6 text-fuchsia-600" />
               </div>

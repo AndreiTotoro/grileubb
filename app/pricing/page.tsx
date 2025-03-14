@@ -58,12 +58,6 @@ export default function PricingPage() {
                   <span className="text-gray-700">Urmărirea progresului de bază</span>
                 </li>
                 <li className="flex items-start">
-                  <div className="mt-1 bg-green-100 rounded-full p-1 mr-3">
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                  </div>
-                  <span className="text-gray-700">Acces la forumul comunității</span>
-                </li>
-                <li className="flex items-start">
                   <div className="mt-1 bg-red-100 rounded-full p-1 mr-3">
                     <X className="h-5 w-5 text-red-600" />
                   </div>
@@ -297,18 +291,6 @@ export default function PricingPage() {
                   <td className="p-4 bg-white border-b border-gray-200 font-medium">Simulări de examen</td>
                   <td className="p-4 bg-white border-b border-gray-200 text-center">
                     <X className="h-5 w-5 text-red-600 mx-auto" />
-                  </td>
-                  <td className="p-4 bg-indigo-50 border-b border-indigo-200 text-center">
-                    <CheckCircle className="h-5 w-5 text-green-600 mx-auto" />
-                  </td>
-                  <td className="p-4 bg-white border-b border-gray-200 text-center">
-                    <CheckCircle className="h-5 w-5 text-green-600 mx-auto" />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-4 bg-white border-b border-gray-200 font-medium">Acces la forum</td>
-                  <td className="p-4 bg-white border-b border-gray-200 text-center">
-                    <CheckCircle className="h-5 w-5 text-green-600 mx-auto" />
                   </td>
                   <td className="p-4 bg-indigo-50 border-b border-indigo-200 text-center">
                     <CheckCircle className="h-5 w-5 text-green-600 mx-auto" />

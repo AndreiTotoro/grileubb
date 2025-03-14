@@ -4,14 +4,13 @@ import Link from "next/link"
 import { useState } from "react"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Home, BookOpen, BarChart2, Users, User, LogOut } from "lucide-react"
+import { Menu, X, Home, BookOpen, BarChart2, User, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navItems = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
   { name: "Practice", href: "/practice", icon: BookOpen },
   { name: "Progress", href: "/progress", icon: BarChart2 },
-  { name: "Community", href: "/community", icon: Users },
   { name: "Profile", href: "/profile", icon: User },
 ]
 

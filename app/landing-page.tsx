@@ -53,9 +53,6 @@ export default function LandingPage() {
             <Link href="#pricing" className="text-gray-700 hover:text-indigo-600 font-medium transition">
               Pricing
             </Link>
-            <Link href="#community" className="text-gray-700 hover:text-indigo-600 font-medium transition">
-              Community
-            </Link>
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
@@ -118,13 +115,6 @@ export default function LandingPage() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Pricing
-            </Link>
-            <Link
-              href="#community"
-              className="text-gray-700 hover:text-indigo-600 font-medium py-2"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Community
             </Link>
 
             <div className="pt-4 space-y-4">
@@ -273,16 +263,6 @@ export default function LandingPage() {
               <h3 className="text-xl font-bold mb-3">Teste practice</h3>
               <p className="text-gray-600">
                 Simulează condiții reale de examen cu teste cronometrate și analize detaliate ale performanței.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-6">
-                <Users className="h-6 w-6 text-pink-600" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Comunitate & Forum</h3>
-              <p className="text-gray-600">
-                Participă la discuții, pune întrebări și primește sprijin de la colegi și mentori.
               </p>
             </div>
 
@@ -488,12 +468,6 @@ export default function LandingPage() {
                   </div>
                   <span className="text-gray-700">Urmărirea progresului de bază</span>
                 </li>
-                <li className="flex items-start">
-                  <div className="mt-1 bg-green-100 rounded-full p-1 mr-3">
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                  </div>
-                  <span className="text-gray-700">Acces la forumul comunității</span>
-                </li>
               </ul>
               <Link href="/register">
                 <Button
@@ -518,37 +492,7 @@ export default function LandingPage() {
                   <div className="mt-1 bg-green-100 rounded-full p-1 mr-3">
                     <CheckCircle className="h-5 w-5 text-green-600" />
                   </div>
-                  <span className="text-gray-700">Tot ce include planul Gratuit</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mt-1 bg-green-100 rounded-full p-1 mr-3">
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                  </div>
-                  <span className="text-gray-700">Întrebări de practică nelimitate</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mt-1 bg-green-100 rounded-full p-1 mr-3">
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                  </div>
-                  <span className="text-gray-700">Indicii și soluții bazate pe AI</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mt-1 bg-green-100 rounded-full p-1 mr-3">
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                  </div>
-                  <span className="text-gray-700">Analize și statistici avansate</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mt-1 bg-green-100 rounded-full p-1 mr-3">
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                  </div>
-                  <span className="text-gray-700">Planuri de studiu personalizate</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="mt-1 bg-green-100 rounded-full p-1 mr-3">
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                  </div>
-                  <span className="text-gray-700">Simulări de examen cu feedback detaliat</span>
+                  <span className="text-gray-700">Urmărirea progresului de bază</span>
                 </li>
               </ul>
               <Link href="/register">
@@ -651,134 +595,9 @@ export default function LandingPage() {
                 </div>
               </div>
               <p className="text-gray-700 italic">
-                "Forumul comunității a fost un game-changer. Primirea ajutorului de la alți studenți și vederea
+                "Indiciile AI au fost un game-changer. Primirea ajutorului personalizat și vederea
                 diferitelor abordări pentru rezolvarea problemelor mi-au îmbunătățit abilitățile dramatic."
               </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Community Section */}
-      <section id="community" className="py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <Badge className="mb-4 bg-indigo-100 text-indigo-800 hover:bg-indigo-200 py-1 px-3 text-sm font-medium rounded-full">
-              Comunitate
-            </Badge>
-            <h2 className="text-4xl font-bold mb-6">Alătură-te comunității noastre</h2>
-            <p className="text-xl text-gray-600">
-              Conectează-te cu alți studenți, împărtășește soluții și învățați împreună
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden max-w-4xl mx-auto">
-            <div className="border-b border-gray-200 p-6">
-              <h3 className="text-2xl font-bold mb-2">Discuții recente</h3>
-              <p className="text-gray-600">Cele mai active conversații din comunitatea noastră</p>
-            </div>
-
-            <div className="divide-y divide-gray-100">
-              <div className="p-6 hover:bg-gray-50 transition-colors">
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-indigo-100 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                    <Image
-                      src="/placeholder.svg?height=40&width=40"
-                      alt="User"
-                      width={40}
-                      height={40}
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <div className="flex items-center mb-1">
-                      <p className="font-bold mr-2">Alex N.</p>
-                      <p className="text-gray-500 text-sm">acum 2 ore</p>
-                    </div>
-                    <p className="font-medium mb-2">Ajutor cu problema de combinatorică din examenul 2022</p>
-                    <p className="text-gray-700 mb-2 line-clamp-2">
-                      Am dificultăți cu întrebarea 7 din examenul de matematică din 2022. Este vorba despre
-                      combinatorică. Poate cineva să explice cum se abordează?
-                    </p>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <MessageSquare className="h-4 w-4 mr-1" />
-                      <span className="mr-4">12 răspunsuri</span>
-                      <ThumbsUp className="h-4 w-4 mr-1" />
-                      <span>5 aprecieri</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6 hover:bg-gray-50 transition-colors">
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-violet-100 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                    <Image
-                      src="/placeholder.svg?height=40&width=40"
-                      alt="User"
-                      width={40}
-                      height={40}
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <div className="flex items-center mb-1">
-                      <p className="font-bold mr-2">Elena M.</p>
-                      <p className="text-gray-500 text-sm">acum 1 zi</p>
-                    </div>
-                    <p className="font-medium mb-2">Grup de studiu pentru informatică</p>
-                    <p className="text-gray-700 mb-2 line-clamp-2">
-                      Caut colegi pentru un grup de studiu pentru examenul de informatică. Putem să ne întâlnim online
-                      de două ori pe săptămână. Cine este interesat?
-                    </p>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <MessageSquare className="h-4 w-4 mr-1" />
-                      <span className="mr-4">8 răspunsuri</span>
-                      <ThumbsUp className="h-4 w-4 mr-1" />
-                      <span>15 aprecieri</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6 hover:bg-gray-50 transition-colors">
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-fuchsia-100 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                    <Image
-                      src="/placeholder.svg?height=40&width=40"
-                      alt="User"
-                      width={40}
-                      height={40}
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <div className="flex items-center mb-1">
-                      <p className="font-bold mr-2">Radu C.</p>
-                      <p className="text-gray-500 text-sm">acum 3 zile</p>
-                    </div>
-                    <p className="font-medium mb-2">Sfaturi pentru gestionarea timpului în examen</p>
-                    <p className="text-gray-700 mb-2 line-clamp-2">
-                      Mereu rămân fără timp la testele de practică. Aveți sfaturi despre cum să gestionez mai bine
-                      timpul în timpul examenului? Cât timp ar trebui să aloc pentru fiecare întrebare?
-                    </p>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <MessageSquare className="h-4 w-4 mr-1" />
-                      <span className="mr-4">24 răspunsuri</span>
-                      <ThumbsUp className="h-4 w-4 mr-1" />
-                      <span>32 aprecieri</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6 border-t border-gray-200 bg-gray-50">
-              <Link href="/register">
-                <Button className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-medium">
-                  Alătură-te comunității
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
@@ -854,11 +673,6 @@ export default function LandingPage() {
                 <li>
                   <Link href="#pricing" className="text-gray-400 hover:text-white transition-colors">
                     Prețuri
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#community" className="text-gray-400 hover:text-white transition-colors">
-                    Comunitate
                   </Link>
                 </li>
               </ul>

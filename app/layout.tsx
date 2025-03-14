@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
   title: "GrileUBB - Ace Your Babeș-Bolyai Admission Exam",
   description:
-    "Practice for the Babeș-Bolyai University admission exam with past questions, AI-powered hints, and a supportive learning community.",
+    "Practice for the Babeș-Bolyai University admission exam with past questions and AI-powered hints.",
     generator: 'v0.dev'
 }
 

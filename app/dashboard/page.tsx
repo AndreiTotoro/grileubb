@@ -180,16 +180,6 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
             </Link>
-
-            <Link href="/community" className="block">
-              <Card className="h-full hover:border-fuchsia-500 hover:shadow-md transition-all">
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <Users className="h-12 w-12 text-fuchsia-500 mb-4" />
-                  <CardTitle className="text-center mb-2">Comunitate</CardTitle>
-                  <p className="text-center text-gray-500">Conectează-te cu alți studenți și discută probleme</p>
-                </CardContent>
-              </Card>
-            </Link>
           </div>
         </TabsContent>
 
